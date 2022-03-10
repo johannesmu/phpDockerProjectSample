@@ -6,4 +6,4 @@
 // echo $myname . " " . $myvar;
 $user = getenv("dbuser");
 echo "username is $user";
-?>
+?>           
