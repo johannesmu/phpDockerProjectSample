@@ -1,9 +1,11 @@
 <?php
-// echo "hello world";
-// // phpinfo();
-// $myvar = 20;
-// $myname = "Johannes";
-// echo $myname . " " . $myvar;
-$user = getenv("dbuser");
-echo "username is $user";
+require('vendor/autoload.php');
+
+use textreview\Book;
+
+$books = new Book();
+$items = $books -> getItems();
+
+print_r( $items );
+
 ?>           

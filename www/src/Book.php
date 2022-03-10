@@ -29,6 +29,20 @@ class Book extends Database {
       {
         throw new Exception("query failed to execute");
       }
+      else 
+      {
+        $result = $statement -> get_result();
+        $books = array();
+        $items = array();
+        while( $row = $result -> fetch_assoc() )
+        {
+          array_push( $items, $row );
+        }
+        $books['total'] = count( $items );
+        $books['items'] = $items;
+
+        return $books;
+      }
     }
     catch ( Exception $exception ) 
     {
