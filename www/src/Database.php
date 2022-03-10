@@ -2,50 +2,45 @@
 namespace textreview;
 
 use Exception;
-use mysqli;
 
-class Database
-{
-    private $username;
-    private $password;
-    private $host;
-    private $db;
-    private $port;
-    private $db_connection;
-    // function to set up the class (refer to magic methods in php)
-    // https://www.php.net/manual/en/language.oop5.magic.php
+class Database {
+  private $username;
+  private $password;
+  private $database_name;
+  private $database_host;
+  private $connection;
 
-    protected function __construct()
+  protected function __construct()
+  {
+    $this -> username = getenv("dbuser");
+    $this -> password = getenv("dbpass");
+    $this -> database_name = getenv("dbname");
+    $this -> database_host = getenv("dbhost");
+    $this -> connect();
+  }
+
+  private function connect() 
+  {
+    try
     {
-        // populate the credentials from variables set using SetEnv in the .htaccess file
-        $this -> username = getenv("dbuser");
-        $this -> password = getenv("dbpass");
-        $this -> host = getenv("dbhost");
-        $this -> db = getenv("dbname");
-        $this -> port = getenv("dbport");
+      $this -> connection = mysqli_connect(
+        $this -> database_host,
+        $this -> username,
+        $this -> password,
+        $this -> database_name
+      );
     }
-    private function connect()
+    catch( Exception $exception) 
     {
-      try {
-        if(!$this -> username || !$this -> password || !$this -> host || !$this -> db )
-        {
-          throw new Exception("missing a db credential");
-        }
-        $this -> connection = mysqli_connect(
-          $this -> host,
-          $this -> username,
-          $this -> password,
-          $this -> db,
-          $this -> port
-        );
-      }
-      catch( Exception $exc )
-      {
-        error_log("database error: " . $exc -> getMessage() );
-      }
+      echo $exception -> getMessage();
     }
-    protected function getConnection()
-    {
-        return $this->db_connection;
-    }
+    
+  }
+
+  protected function getConnection()
+  {
+    return $this -> connection;
+  }
 }
+
+?>
