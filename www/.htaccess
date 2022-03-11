@@ -1,0 +1,8 @@
+# Database Credentials
+SetEnv dbuser appuser
+SetEnv dbpass password
+SetEnv dbname db_data
+SetEnv dbhost db
+# On Xampp
+# use 
+# SetEnv dbhost localhost
