@@ -40,7 +40,7 @@ class Book extends Database {
         }
         $books['total'] = count( $items );
         $books['items'] = $items;
-
+        
         return $books;
       }
     }

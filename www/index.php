@@ -6,6 +6,11 @@ use textreview\Book;
 $books = new Book();
 $items = $books -> getItems();
 
-print_r( $items );
+$loader = new Twig\Loader\FilesystemLoader('templates');
+$twig = new Twig\Environment($loader, [
+  "cache" => false,
+]);
+echo $twig -> render('home.html.twig', ['books' => $items, 'page_title' => 'TextReview'] );
+
 
 ?>           
