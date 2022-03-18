@@ -8,14 +8,29 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="styles/textreview.css" >
+
     <title>{{ page_title }}</title>
   </head>
   <body>
-    <h1>{{ greeting }}</h1>
-    <p>{{ books.total }} books found</p>
-    {% for book in books.items %}
-      <h3>{{ book.book_title }}</h3>
-    {% endfor %}
+    <div class="container">
+      <h1>{{ greeting }}</h1>
+      <p>{{ books.total }} books found</p>
+      <div class="row">
+        {% for book in books.items %}
+          <div class="col-md-4">
+            <div class="card" >
+              <img src="book_images/{{ book.picture }}" class="card-img-top book-image" alt="book cover for {{book.book_title}}">
+              <div class="card-body">
+                <h5 class="card-title">{{ book.book_title }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>

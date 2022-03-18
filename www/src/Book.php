@@ -19,14 +19,21 @@ class Book extends Database {
   {
     $query = "
     SELECT 
-    book_id, 
-    book_title, 
-    tagline, 
-    isbn10, 
-    isbn13, 
-    year, 
-    pages 
-    FROM book";
+      book.book_id,
+      book_title,
+      tagline,
+      isbn13,
+      year,
+      pages,
+      book_image.image_id,
+      image.file_name AS picture
+      FROM book 
+      INNER JOIN book_image
+      ON book.book_id = book_image.book_id
+      INNER JOIN image
+      ON book_image.image_id = image.image_id
+      WHERE 1
+    ";
 
     try
     {
@@ -61,5 +68,8 @@ class Book extends Database {
       echo $exception -> getMessage();
     }
   }
+
+  public function getDetail() {
+    
+  }
 }
-?>
