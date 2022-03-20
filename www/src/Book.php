@@ -17,7 +17,24 @@ class Book extends Database {
 
   public function getItems() 
   {
-    $query = "SELECT * FROM book";
+    $query = "
+    SELECT 
+      book.book_id,
+      book_title,
+      tagline,
+      isbn13,
+      year,
+      pages,
+      book_image.image_id,
+      image.file_name AS picture
+      FROM book 
+      INNER JOIN book_image
+      ON book.book_id = book_image.book_id
+      INNER JOIN image
+      ON book_image.image_id = image.image_id
+      WHERE 1
+    ";
+
     try
     {
       $statement = $this -> dbconnection -> prepare( $query );
@@ -25,29 +42,79 @@ class Book extends Database {
       {
         throw new Exception("problem with query " . $query );
       }
+
       if( !$statement -> execute() ) 
       {
         throw new Exception("query failed to execute");
       }
       else 
       {
-        $result = $statement -> get_result();
         $books = array();
         $items = array();
-        while( $row = $result -> fetch_assoc() )
+        $result = $statement -> get_result();
+        while( $row = $result -> fetch_assoc() ) 
         {
           array_push( $items, $row );
         }
-        $books['total'] = count( $items );
-        $books['items'] = $items;
-        
+        $books["total"] = count($items);
+        $books["items"] = $items;
+
         return $books;
       }
+      return null;
     }
     catch ( Exception $exception ) 
     {
       echo $exception -> getMessage();
     }
   }
+
+  public function getDetail( $book_id ) {
+    $query = "
+    SELECT 
+      book.book_id,
+      book_title,
+      tagline,
+      isbn13,
+      year,
+      pages,
+      image.file_name AS picture,
+      author.first AS suthor_first,
+      author.last AS author_last,
+      publisher.name AS publisher
+      FROM book 
+      INNER JOIN book_image
+      ON book.book_id = book_image.book_id
+      INNER JOIN image
+      ON book_image.image_id = image.image_id
+      INNER JOIN book_author
+      ON book.book_id = book_author.book_id
+      INNER JOIN author
+      ON book_author.author_id = author.author_id
+      INNER JOIN book_publisher
+      ON book.book_id = book_publisher.book_id
+      INNER JOIN publisher
+      ON book_publisher.publisher_id = publisher.publisher_id
+      WHERE book.book_id = ?
+    ";
+    try {
+      $statement = $this -> dbconnection -> prepare( $query );
+      if( !$statement ) {
+        throw new Exception("query error");
+      }
+      $statement -> bind_param( "i", $book_id );
+      if( !$statement -> execute() ) {
+        throw new Exception("query error");
+      }
+      else {
+        $result = $statement -> get_result();
+        $detail = $result -> fetch_assoc();
+        return $detail;
+      }
+    }
+    catch( Exception $exc) {
+      echo $exc -> getMessage();
+      return false;
+    }
+  }
 }
-?>
