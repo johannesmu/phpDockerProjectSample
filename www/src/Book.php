@@ -79,7 +79,7 @@ class Book extends Database {
       year,
       pages,
       image.file_name AS picture,
-      author.first AS suthor_first,
+      author.first AS author_first,
       author.last AS author_last,
       publisher.name AS publisher
       FROM book 
