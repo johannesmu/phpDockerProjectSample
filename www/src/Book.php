@@ -72,14 +72,15 @@ class Book extends Database {
   public function getDetail( $book_id ) {
     $query = "
     SELECT 
-      book.book_id,
+      book.book_id AS id,
       book_title,
       tagline,
       isbn13,
+      isbn10,
       year,
       pages,
       image.file_name AS picture,
-      author.first AS suthor_first,
+      author.first AS author_first,
       author.last AS author_last,
       publisher.name AS publisher
       FROM book 
