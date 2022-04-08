@@ -63,7 +63,50 @@ class Account extends Database {
   }
 
   public function login( $email, $password ) {
+    $errors = array();
+    $response = array();
 
+    $query = "
+    SELECT 
+    id, email, password, status
+    FROM account
+    WHERE status = 1 
+    AND
+    email = ?
+    ";
+
+    $statement = $this -> dbconnection -> prepare( $query );
+    $statement -> bind_param( "s", $email );
+
+    try {
+      if( !$statement -> execute() ) {
+        throw new Exception("Error executing query");
+      }
+      else {
+        $result = $statement -> get_result();
+        if( $result -> num_rows == 0 ) {
+          throw new Exception("Account does not exist");
+        }
+        else {
+          $account_data = $result -> fetch_assoc();
+          if( password_verify( $password, $account_data["password"] ) ) {
+            $response["success"] = true;
+            $response["id"] = $account_data["id"];
+            $response["email"] = $account_data["email"];
+            return $response;
+          }
+          else {
+            throw new Exception("Password is incorrect");
+          }
+        }
+      }
+    }
+    catch ( Exception $exc ) {
+      $errors["system"] = $exc -> getMessage();
+      $response["success"] = false;
+      $response["errors"] = $errors;
+      return $response;
+    }
   }
 }
 ?>
