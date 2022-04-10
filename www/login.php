@@ -2,6 +2,7 @@
 require("vendor/autoload.php");
 
 use textreview\Account;
+use textreview\Session;
 
 $account = new Account();
 
@@ -15,9 +16,8 @@ if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
   if( strlen($user_email) > 0 && strlen($user_password) > 0 ) {
     $result = $account -> login( $user_email, $user_password );
     if( $result["success"] == true ) {
-      session_start();
-      $_SESSION["email"] = $user_email;
-      $_SESSION["account_id"] = $result["id"];
+      Session::set("email", $user_email);
+      Session::set("account_id", $result["id"] );
     }
   }
 }
