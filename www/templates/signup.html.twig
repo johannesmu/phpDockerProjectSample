@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  {% include "partial/head.html.twig" %}
+  <body>
+    {% include "partial/navigation.html.twig" %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <form id="signup" method="post" action="signup.php">
+            <label for="user-email">Email</label>
+            <input class="form-control" name="email" id="user-email" type="email" placeholder="user@domain.com" required value="{{email}}">
+            <label>Password</label>
+            <input class="form-control" name="password" id="user-password" type="password" placeholder="minimum 8 characters" required value="{{password}}">
+            {% set outcome = result.errors | join(", ") %}
+            <button type="submit" class="btn btn-info">Sign up</button>
+            {% if outcome | length > 0 %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ outcome }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </div>
+   {% include "partial/footer.html.twig" %}
+   {% include "partial/script.html.twig" %}
+  </body>
+</html>

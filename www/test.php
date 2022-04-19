@@ -11,5 +11,9 @@ $items = $book -> getItems();
 $loader = new \Twig\Loader\FilesystemLoader("templates");
 $twig = new Twig\Environment( $loader, [ "cache" => false ] );
 
-echo $twig -> render("home.html.twig", ["page_title" => "TextReview", "greeting" => "Hello there", "books" => $items ] );
+// echo $twig -> render("home.html.twig", ["page_title" => "TextReview", "greeting" => "Hello there", "books" => $items ] );
+
+$password = password_hash("password", PASSWORD_DEFAULT );
+echo $password . " length is " . strlen( $password ) . " characters";
+
 ?>

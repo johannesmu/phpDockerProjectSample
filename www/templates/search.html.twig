@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  {% include "partial/head.html.twig" %}
+  <body>
+    {% include "partial/navigation.html.twig" %}
+    <div class="container">
+      <h3>We found {{total}} items</h3>
+     {% for item in result %}
+      <div class="row">
+        <h4>{{item.book_title}}</h4>
+      </div>
+     {% endfor %}
+    </div>
+   {% include "partial/footer.html.twig" %}
+   {% include "partial/script.html.twig" %}
+  </body>
+</html>

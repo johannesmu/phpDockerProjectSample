@@ -17,8 +17,8 @@ class Search extends Database {
     FROM book 
     WHERE book_title LIKE ?";
     $statement = $this -> dbconnection -> prepare( $query );
-    $seach_term = "%$term%";
-    $statement -> bind_param("s", $seach_term  );
+    $search_term = "%$term%";
+    $statement -> bind_param("s", $search_term );
     try {
       if( !$statement -> execute() ) {
         throw new Exception("query error");
