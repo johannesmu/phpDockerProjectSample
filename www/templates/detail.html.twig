@@ -12,6 +12,9 @@
           <h5>{{book.book_title}}</h5>
           <p>ISBN {{book.isbn10}} {{book.isbn13}}</p>
           <p>by {{book.author_first}} {{book.author_last}}</p>
+          {% if account_id %}
+            <button class="btn btn-info">Review this book</button>
+          {% endif %}
         </div>
       </div>
     </div>
