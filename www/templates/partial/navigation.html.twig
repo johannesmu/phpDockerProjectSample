@@ -12,13 +12,21 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
+        {% if email | length == 0 %}
         <li class="nav-item">
           <a class="nav-link" href="login.php">Sign In</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="signup.php">Sign Up</a>
         </li>
+        {% endif %}
         {% if email | length > 0 %}
+        <li class="nav-item">
+          <a class="nav-link" href="profile.php">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="favourites.php">My Favourites</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="signout.php">Sign Out</a>
         </li>
