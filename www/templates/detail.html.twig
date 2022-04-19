@@ -13,8 +13,23 @@
           <p>ISBN {{book.isbn10}} {{book.isbn13}}</p>
           <p>by {{book.author_first}} {{book.author_last}}</p>
           {% if account_id %}
-            <button class="btn btn-info">Review this book</button>
+            <form id="review" method="post" action="detail.php?id={{book.id}}">
+              <h4>Write a review</h4>
+              <label class="form-label" for="review-title">Title</label>
+              <input class="form-control" name="title" id="review-title">
+              <label class="form-label" for="review-text">Content</label>
+              <textarea class="form-control" rows="3" cols="20" name="text" id="review-text"></textarea>
+              {# hidden form fields #}
+              <input type="hidden" value="{{book.id}}" name="book_id">
+              <input type="hidden" value="{{account_id}}" name="account_id">
+              <button type="submit" class="btn btn-info">Submit review</button>
+            </form>
           {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h4>Reviews for this book</h4>
         </div>
       </div>
     </div>
