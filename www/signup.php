@@ -3,6 +3,7 @@
 require("vendor/autoload.php");
 
 use textreview\Account;
+use textreview\Session;
 
 $account = new Account();
 
@@ -16,6 +17,12 @@ if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
   // check if user_email and user_password is not empty
   if( strlen($user_email) > 0 && strlen($user_password) > 0 ) {
     $result = $account -> create( $user_email, $user_password);
+    if( $result["success"] == true ) {
+      Session::set("email", $result["email"] );
+      Session::set("account_id", $result["id"] );
+      // redirect user to home page
+      header("location: /");
+    }
   }
 }
 
