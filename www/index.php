@@ -13,7 +13,7 @@ $email = Session::get("email");
 
 $loader = new \Twig\Loader\FilesystemLoader("templates");
 $twig = new Twig\Environment( $loader, [ "cache" => false ] );
-// json --> { "name" : "lucy", "location" : "melbourne" }
+
 echo $twig -> render(
   "home.html.twig", 
   [
