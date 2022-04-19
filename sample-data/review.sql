@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 19, 2022 at 07:04 AM
+-- Generation Time: Apr 19, 2022 at 08:07 AM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.20
 
@@ -47,7 +47,8 @@ CREATE TABLE `review` (
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `book_id` (`book_id`,`account_id`);
+  ADD UNIQUE KEY `book_id` (`book_id`,`account_id`),
+  ADD KEY `account_id` (`account_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -58,6 +59,17 @@ ALTER TABLE `review`
 --
 ALTER TABLE `review`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
