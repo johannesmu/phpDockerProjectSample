@@ -39,6 +39,8 @@ class Account extends Database {
         }
         else {
           $response["success"] = true;
+          $response["id"] = $this -> dbconnection -> insert_id;
+          $response["email"] = $email;
           $response["message"] = "Account has been created!";
         }
       }
