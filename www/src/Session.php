@@ -14,7 +14,12 @@ class Session {
 
   public static function get( $name ) {
     self::init();
-    return $_SESSION[$name] ? $_SESSION[$name] : null;
+    if( array_key_exists( $name, $_SESSION ) ) {
+      return $_SESSION[$name];
+    }
+    else {
+      return null;
+    }
   }
 
   public static function unset( $name ) {
