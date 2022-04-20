@@ -3,18 +3,21 @@
   {% include "partial/head.html.twig" %}
   <body>
     {% include "partial/navigation.html.twig" %}
-    <div class="container">
+    <div class="container my-3">
       <h1>{{ greeting }}</h1>
       <p>{{ books.total }} books found</p>
       <div class="row">
         {% for book in books.items %}
           <div class="col-md-4">
-            <div class="card" >
+            <div class="card my-2 position-relative" >
               <img src="book_images/{{ book.picture }}" class="card-img-top book-image" alt="book cover for {{book.book_title}}">
               <div class="card-body">
                 <h5 class="card-title">{{ book.book_title }}</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="detail.php?id={{book.book_id}}" class="btn btn-primary">View Detail</a>
+                {# <a href="detail.php?id={{book.book_id}}" class="btn btn-primary">View Detail</a> #}
+                <a href="detail.php?id={{book.book_id}}" class="position-absolute" style="top:0;bottom:0;left:0;right:0;">
+                  <span class="visually-hidden">View Detail</span>
+                </a>
               </div>
             </div>
           </div>
