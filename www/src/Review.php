@@ -18,8 +18,10 @@ class Review extends Database {
     }
     // if none is empty
     $query = "
-    INSERT INTO review ( book_id, account_id, title, text, created, updated, active )
-    VALUES ( ?, ?, ?, ?, NOW(), NOW(), 1 )
+    INSERT INTO review 
+    ( book_id, account_id, title, text, created, updated, active )
+    VALUES 
+    ( ?, ?, ?, ?, NOW(), NOW(), 1 )
     ";
     // pass query to database through database connection
     try{
@@ -36,7 +38,8 @@ class Review extends Database {
       }
     }
     catch( Exception $exc ) {
-      error_log( $exc -> getMessage() );
+      echo $exc -> getMessage();
+      // error_log( $exc -> getMessage() );
     }
   }
 
@@ -47,7 +50,9 @@ class Review extends Database {
     book_id,
     account_id,
     title,
-    text
+    text,
+    created,
+    updated
     FROM
     review
     WHERE book_id = ?
@@ -103,6 +108,39 @@ class Review extends Database {
           array_push( $reviews, $row );
         }
         return $reviews;
+      }
+    }
+    catch( Exception $exc ) {
+      error_log( $exc -> getMessage() );
+    }
+  }
+
+  public function getUserReviewForBook( $book_id, $account_id) {
+    $query = "
+    SELECT 
+    id,
+    book_id,
+    account_id,
+    title,
+    text
+    FROM
+    review
+    WHERE account_id = ?
+    AND book_id = ?
+    ";
+    try{
+      $statement = $this -> dbconnection -> prepare( $query );
+      if( !$statement ) { 
+        throw new Exception("query error"); 
+      }
+      $statement -> bind_param( "ii", $account_id, $book_id );
+      if( !$statement -> execute() ) {
+        throw new Exception("execute error");
+      }
+      else {
+        $result = $statement -> get_result();
+        $review = $result -> fetch_assoc();
+        return $review;
       }
     }
     catch( Exception $exc ) {
