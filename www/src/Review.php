@@ -16,7 +16,7 @@ class Review extends Database {
     if( empty($book_id) || empty($account_id) || empty($title) || empty($text) ) {
       return false;
     }
-    // if none is empty
+    // if none of the parameters is empty
     $query = "
     INSERT INTO review 
     ( book_id, account_id, title, text, created, updated, active )
